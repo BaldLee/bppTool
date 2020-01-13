@@ -1,0 +1,6 @@
+print(t.check())
+
+elapsed = time.clock() - start
+print("Time used: %.3fs" %elapsed)
+
+print("-- finished --")

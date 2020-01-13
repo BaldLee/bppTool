@@ -1,0 +1,11 @@
+2                      // size of V
+X, Y                  // elements in V
+2                     // size of Delta
+[X, a, (Y)]          // rule 1
+[Y, b, (X, X)]     // rule 2
+X                     // the initial state
+EG(AF(X + Y >= 2))            // EG logic formula
+100                     // bound k
+
+
+

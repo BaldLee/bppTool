@@ -1,0 +1,10 @@
+import time
+from z3 import *
+from structure import *
+
+start = time.clock()
+t = Solver()
+u = []
+for i in range(process_num):
+    u.append(initial_expr[i])
+
