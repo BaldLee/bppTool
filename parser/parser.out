@@ -2,22 +2,14 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    AA
-    AF
-    AND
-    EA
-    EG
     LBRACE
     MINUS
-    NOT
-    OR
     RBRACE
-    SEMICOLON
 
 Grammar
 
-Rule 0     S' -> test
-Rule 1     test -> atom
+Rule 0     S' -> input
+Rule 1     input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
 Rule 2     variables -> VAR
 Rule 3     variables -> variables COMMA VAR
 Rule 4     rules -> rule
@@ -26,80 +18,219 @@ Rule 6     rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
 Rule 7     atom -> plusexpes GE NUMBER
 Rule 8     plusexpes -> VAR
 Rule 9     plusexpes -> plusexpes PLUS VAR
+Rule 10    formula -> atom
+Rule 11    formula -> NOT formula
+Rule 12    formula -> formula AND formula
+Rule 13    formula -> formula OR formula
+Rule 14    formula -> EA LPAREN ACT COMMA formula RPAREN
+Rule 15    formula -> AA LPAREN ACT COMMA formula RPAREN
+Rule 16    formula -> EG LPAREN formula RPAREN
+Rule 17    formula -> AF LPAREN formula RPAREN
+Rule 18    formula -> LPAREN formula RPAREN
+Rule 19    eglogicformula -> formula
 
 Terminals, with rules where they appear
 
-AA                   : 
-ACT                  : 6
-AF                   : 
-AND                  : 
-COMMA                : 3 6 6
-EA                   : 
-EG                   : 
+AA                   : 15
+ACT                  : 6 14 15
+AF                   : 17
+AND                  : 12
+COMMA                : 3 6 6 14 15
+EA                   : 14
+EG                   : 16
 GE                   : 7
 LBRACE               : 
 LBRACK               : 6
-LPAREN               : 6
+LPAREN               : 6 14 15 16 17 18
 MINUS                : 
-NOT                  : 
-NUMBER               : 7
-OR                   : 
+NOT                  : 11
+NUMBER               : 1 7
+OR                   : 13
 PLUS                 : 9
 RBRACE               : 
 RBRACK               : 6
-RPAREN               : 6
-SEMICOLON            : 
-VAR                  : 2 3 6 8 9
+RPAREN               : 6 14 15 16 17 18
+SEMICOLON            : 1 1 1 1
+VAR                  : 1 2 3 6 8 9
 error                : 
 
 Nonterminals, with rules where they appear
 
-atom                 : 1
+atom                 : 10
+eglogicformula       : 1
+formula              : 11 12 12 13 13 14 15 16 17 18 19
+input                : 0
 plusexpes            : 7 9
 rule                 : 4 5
-rules                : 5
-test                 : 0
-variables            : 3 6
+rules                : 1 5
+variables            : 1 3 6
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . test
-    (1) test -> . atom
-    (7) atom -> . plusexpes GE NUMBER
-    (8) plusexpes -> . VAR
-    (9) plusexpes -> . plusexpes PLUS VAR
+    (0) S' -> . input
+    (1) input -> . variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
+    (2) variables -> . VAR
+    (3) variables -> . variables COMMA VAR
 
-    VAR             shift and go to state 4
+    VAR             shift and go to state 3
 
-    test                           shift and go to state 1
-    atom                           shift and go to state 2
-    plusexpes                      shift and go to state 3
+    input                          shift and go to state 1
+    variables                      shift and go to state 2
 
 state 1
 
-    (0) S' -> test .
+    (0) S' -> input .
 
 
 
 state 2
 
-    (1) test -> atom .
+    (1) input -> variables . SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
+    (3) variables -> variables . COMMA VAR
 
-    $end            reduce using rule 1 (test -> atom .)
+    SEMICOLON       shift and go to state 4
+    COMMA           shift and go to state 5
 
 
 state 3
 
-    (7) atom -> plusexpes . GE NUMBER
-    (9) plusexpes -> plusexpes . PLUS VAR
+    (2) variables -> VAR .
 
-    GE              shift and go to state 5
-    PLUS            shift and go to state 6
+    SEMICOLON       reduce using rule 2 (variables -> VAR .)
+    COMMA           reduce using rule 2 (variables -> VAR .)
+    RPAREN          reduce using rule 2 (variables -> VAR .)
 
 
 state 4
+
+    (1) input -> variables SEMICOLON . rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
+    (4) rules -> . rule
+    (5) rules -> . rules rule
+    (6) rule -> . LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
+
+    LBRACK          shift and go to state 8
+
+    rules                          shift and go to state 6
+    rule                           shift and go to state 7
+
+state 5
+
+    (3) variables -> variables COMMA . VAR
+
+    VAR             shift and go to state 9
+
+
+state 6
+
+    (1) input -> variables SEMICOLON rules . SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
+    (5) rules -> rules . rule
+    (6) rule -> . LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
+
+    SEMICOLON       shift and go to state 10
+    LBRACK          shift and go to state 8
+
+    rule                           shift and go to state 11
+
+state 7
+
+    (4) rules -> rule .
+
+    SEMICOLON       reduce using rule 4 (rules -> rule .)
+    LBRACK          reduce using rule 4 (rules -> rule .)
+
+
+state 8
+
+    (6) rule -> LBRACK . VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
+
+    VAR             shift and go to state 12
+
+
+state 9
+
+    (3) variables -> variables COMMA VAR .
+
+    SEMICOLON       reduce using rule 3 (variables -> variables COMMA VAR .)
+    COMMA           reduce using rule 3 (variables -> variables COMMA VAR .)
+    RPAREN          reduce using rule 3 (variables -> variables COMMA VAR .)
+
+
+state 10
+
+    (1) input -> variables SEMICOLON rules SEMICOLON . VAR SEMICOLON eglogicformula SEMICOLON NUMBER
+
+    VAR             shift and go to state 13
+
+
+state 11
+
+    (5) rules -> rules rule .
+
+    SEMICOLON       reduce using rule 5 (rules -> rules rule .)
+    LBRACK          reduce using rule 5 (rules -> rules rule .)
+
+
+state 12
+
+    (6) rule -> LBRACK VAR . COMMA ACT COMMA LPAREN variables RPAREN RBRACK
+
+    COMMA           shift and go to state 14
+
+
+state 13
+
+    (1) input -> variables SEMICOLON rules SEMICOLON VAR . SEMICOLON eglogicformula SEMICOLON NUMBER
+
+    SEMICOLON       shift and go to state 15
+
+
+state 14
+
+    (6) rule -> LBRACK VAR COMMA . ACT COMMA LPAREN variables RPAREN RBRACK
+
+    ACT             shift and go to state 16
+
+
+state 15
+
+    (1) input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON . eglogicformula SEMICOLON NUMBER
+    (19) eglogicformula -> . formula
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    eglogicformula                 shift and go to state 18
+    formula                        shift and go to state 19
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 16
+
+    (6) rule -> LBRACK VAR COMMA ACT . COMMA LPAREN variables RPAREN RBRACK
+
+    COMMA           shift and go to state 28
+
+
+state 17
 
     (8) plusexpes -> VAR .
 
@@ -107,31 +238,571 @@ state 4
     PLUS            reduce using rule 8 (plusexpes -> VAR .)
 
 
-state 5
+state 18
+
+    (1) input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula . SEMICOLON NUMBER
+
+    SEMICOLON       shift and go to state 29
+
+
+state 19
+
+    (19) eglogicformula -> formula .
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    SEMICOLON       reduce using rule 19 (eglogicformula -> formula .)
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 20
+
+    (10) formula -> atom .
+
+    AND             reduce using rule 10 (formula -> atom .)
+    OR              reduce using rule 10 (formula -> atom .)
+    SEMICOLON       reduce using rule 10 (formula -> atom .)
+    RPAREN          reduce using rule 10 (formula -> atom .)
+
+
+state 21
+
+    (11) formula -> NOT . formula
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 32
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 22
+
+    (14) formula -> EA . LPAREN ACT COMMA formula RPAREN
+
+    LPAREN          shift and go to state 33
+
+
+state 23
+
+    (18) formula -> LPAREN . formula RPAREN
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 34
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 24
+
+    (15) formula -> AA . LPAREN ACT COMMA formula RPAREN
+
+    LPAREN          shift and go to state 35
+
+
+state 25
+
+    (16) formula -> EG . LPAREN formula RPAREN
+
+    LPAREN          shift and go to state 36
+
+
+state 26
+
+    (17) formula -> AF . LPAREN formula RPAREN
+
+    LPAREN          shift and go to state 37
+
+
+state 27
+
+    (7) atom -> plusexpes . GE NUMBER
+    (9) plusexpes -> plusexpes . PLUS VAR
+
+    GE              shift and go to state 38
+    PLUS            shift and go to state 39
+
+
+state 28
+
+    (6) rule -> LBRACK VAR COMMA ACT COMMA . LPAREN variables RPAREN RBRACK
+
+    LPAREN          shift and go to state 40
+
+
+state 29
+
+    (1) input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON . NUMBER
+
+    NUMBER          shift and go to state 41
+
+
+state 30
+
+    (12) formula -> formula AND . formula
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 42
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 31
+
+    (13) formula -> formula OR . formula
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 43
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 32
+
+    (11) formula -> NOT formula .
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 11 (formula -> NOT formula .)
+    RPAREN          reduce using rule 11 (formula -> NOT formula .)
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+  ! AND             [ reduce using rule 11 (formula -> NOT formula .) ]
+  ! OR              [ reduce using rule 11 (formula -> NOT formula .) ]
+
+
+state 33
+
+    (14) formula -> EA LPAREN . ACT COMMA formula RPAREN
+
+    ACT             shift and go to state 44
+
+
+state 34
+
+    (18) formula -> LPAREN formula . RPAREN
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    RPAREN          shift and go to state 45
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 35
+
+    (15) formula -> AA LPAREN . ACT COMMA formula RPAREN
+
+    ACT             shift and go to state 46
+
+
+state 36
+
+    (16) formula -> EG LPAREN . formula RPAREN
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 47
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 37
+
+    (17) formula -> AF LPAREN . formula RPAREN
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 48
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 38
 
     (7) atom -> plusexpes GE . NUMBER
 
-    NUMBER          shift and go to state 7
+    NUMBER          shift and go to state 49
 
 
-state 6
+state 39
 
     (9) plusexpes -> plusexpes PLUS . VAR
 
-    VAR             shift and go to state 8
+    VAR             shift and go to state 50
 
 
-state 7
+state 40
+
+    (6) rule -> LBRACK VAR COMMA ACT COMMA LPAREN . variables RPAREN RBRACK
+    (2) variables -> . VAR
+    (3) variables -> . variables COMMA VAR
+
+    VAR             shift and go to state 3
+
+    variables                      shift and go to state 51
+
+state 41
+
+    (1) input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER .
+
+    $end            reduce using rule 1 (input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER .)
+
+
+state 42
+
+    (12) formula -> formula AND formula .
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 12 (formula -> formula AND formula .)
+    RPAREN          reduce using rule 12 (formula -> formula AND formula .)
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+  ! AND             [ reduce using rule 12 (formula -> formula AND formula .) ]
+  ! OR              [ reduce using rule 12 (formula -> formula AND formula .) ]
+
+
+state 43
+
+    (13) formula -> formula OR formula .
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    SEMICOLON       reduce using rule 13 (formula -> formula OR formula .)
+    RPAREN          reduce using rule 13 (formula -> formula OR formula .)
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+  ! AND             [ reduce using rule 13 (formula -> formula OR formula .) ]
+  ! OR              [ reduce using rule 13 (formula -> formula OR formula .) ]
+
+
+state 44
+
+    (14) formula -> EA LPAREN ACT . COMMA formula RPAREN
+
+    COMMA           shift and go to state 52
+
+
+state 45
+
+    (18) formula -> LPAREN formula RPAREN .
+
+    AND             reduce using rule 18 (formula -> LPAREN formula RPAREN .)
+    OR              reduce using rule 18 (formula -> LPAREN formula RPAREN .)
+    SEMICOLON       reduce using rule 18 (formula -> LPAREN formula RPAREN .)
+    RPAREN          reduce using rule 18 (formula -> LPAREN formula RPAREN .)
+
+
+state 46
+
+    (15) formula -> AA LPAREN ACT . COMMA formula RPAREN
+
+    COMMA           shift and go to state 53
+
+
+state 47
+
+    (16) formula -> EG LPAREN formula . RPAREN
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    RPAREN          shift and go to state 54
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 48
+
+    (17) formula -> AF LPAREN formula . RPAREN
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    RPAREN          shift and go to state 55
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 49
 
     (7) atom -> plusexpes GE NUMBER .
 
-    $end            reduce using rule 7 (atom -> plusexpes GE NUMBER .)
+    AND             reduce using rule 7 (atom -> plusexpes GE NUMBER .)
+    OR              reduce using rule 7 (atom -> plusexpes GE NUMBER .)
+    SEMICOLON       reduce using rule 7 (atom -> plusexpes GE NUMBER .)
+    RPAREN          reduce using rule 7 (atom -> plusexpes GE NUMBER .)
 
 
-state 8
+state 50
 
     (9) plusexpes -> plusexpes PLUS VAR .
 
     GE              reduce using rule 9 (plusexpes -> plusexpes PLUS VAR .)
     PLUS            reduce using rule 9 (plusexpes -> plusexpes PLUS VAR .)
 
+
+state 51
+
+    (6) rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables . RPAREN RBRACK
+    (3) variables -> variables . COMMA VAR
+
+    RPAREN          shift and go to state 56
+    COMMA           shift and go to state 5
+
+
+state 52
+
+    (14) formula -> EA LPAREN ACT COMMA . formula RPAREN
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 57
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 53
+
+    (15) formula -> AA LPAREN ACT COMMA . formula RPAREN
+    (10) formula -> . atom
+    (11) formula -> . NOT formula
+    (12) formula -> . formula AND formula
+    (13) formula -> . formula OR formula
+    (14) formula -> . EA LPAREN ACT COMMA formula RPAREN
+    (15) formula -> . AA LPAREN ACT COMMA formula RPAREN
+    (16) formula -> . EG LPAREN formula RPAREN
+    (17) formula -> . AF LPAREN formula RPAREN
+    (18) formula -> . LPAREN formula RPAREN
+    (7) atom -> . plusexpes GE NUMBER
+    (8) plusexpes -> . VAR
+    (9) plusexpes -> . plusexpes PLUS VAR
+
+    NOT             shift and go to state 21
+    EA              shift and go to state 22
+    AA              shift and go to state 24
+    EG              shift and go to state 25
+    AF              shift and go to state 26
+    LPAREN          shift and go to state 23
+    VAR             shift and go to state 17
+
+    formula                        shift and go to state 58
+    atom                           shift and go to state 20
+    plusexpes                      shift and go to state 27
+
+state 54
+
+    (16) formula -> EG LPAREN formula RPAREN .
+
+    AND             reduce using rule 16 (formula -> EG LPAREN formula RPAREN .)
+    OR              reduce using rule 16 (formula -> EG LPAREN formula RPAREN .)
+    SEMICOLON       reduce using rule 16 (formula -> EG LPAREN formula RPAREN .)
+    RPAREN          reduce using rule 16 (formula -> EG LPAREN formula RPAREN .)
+
+
+state 55
+
+    (17) formula -> AF LPAREN formula RPAREN .
+
+    AND             reduce using rule 17 (formula -> AF LPAREN formula RPAREN .)
+    OR              reduce using rule 17 (formula -> AF LPAREN formula RPAREN .)
+    SEMICOLON       reduce using rule 17 (formula -> AF LPAREN formula RPAREN .)
+    RPAREN          reduce using rule 17 (formula -> AF LPAREN formula RPAREN .)
+
+
+state 56
+
+    (6) rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN . RBRACK
+
+    RBRACK          shift and go to state 59
+
+
+state 57
+
+    (14) formula -> EA LPAREN ACT COMMA formula . RPAREN
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    RPAREN          shift and go to state 60
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 58
+
+    (15) formula -> AA LPAREN ACT COMMA formula . RPAREN
+    (12) formula -> formula . AND formula
+    (13) formula -> formula . OR formula
+
+    RPAREN          shift and go to state 61
+    AND             shift and go to state 30
+    OR              shift and go to state 31
+
+
+state 59
+
+    (6) rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK .
+
+    SEMICOLON       reduce using rule 6 (rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK .)
+    LBRACK          reduce using rule 6 (rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK .)
+
+
+state 60
+
+    (14) formula -> EA LPAREN ACT COMMA formula RPAREN .
+
+    AND             reduce using rule 14 (formula -> EA LPAREN ACT COMMA formula RPAREN .)
+    OR              reduce using rule 14 (formula -> EA LPAREN ACT COMMA formula RPAREN .)
+    SEMICOLON       reduce using rule 14 (formula -> EA LPAREN ACT COMMA formula RPAREN .)
+    RPAREN          reduce using rule 14 (formula -> EA LPAREN ACT COMMA formula RPAREN .)
+
+
+state 61
+
+    (15) formula -> AA LPAREN ACT COMMA formula RPAREN .
+
+    AND             reduce using rule 15 (formula -> AA LPAREN ACT COMMA formula RPAREN .)
+    OR              reduce using rule 15 (formula -> AA LPAREN ACT COMMA formula RPAREN .)
+    SEMICOLON       reduce using rule 15 (formula -> AA LPAREN ACT COMMA formula RPAREN .)
+    RPAREN          reduce using rule 15 (formula -> AA LPAREN ACT COMMA formula RPAREN .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for AND in state 32 resolved as shift
+WARNING: shift/reduce conflict for OR in state 32 resolved as shift
+WARNING: shift/reduce conflict for AND in state 42 resolved as shift
+WARNING: shift/reduce conflict for OR in state 42 resolved as shift
+WARNING: shift/reduce conflict for AND in state 43 resolved as shift
+WARNING: shift/reduce conflict for OR in state 43 resolved as shift

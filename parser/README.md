@@ -67,6 +67,7 @@ Action names are composed of lowercase letters and digits, and action names must
 - rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
 - eglogicformula -> formula
 - formula -> atom
+- formula -> LPAREN formula RPAREN
 - formula -> NOT LPAREN formula RPAREN
 - formula -> LPAREN formula RPAREN AND LPAREN formula RPAREN
 - formula -> LPAREN formula RPAREN OR LPAREN formula RPAREN

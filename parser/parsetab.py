@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AA ACT AF AND COMMA EA EG GE LBRACE LBRACK LPAREN MINUS NOT NUMBER OR PLUS RBRACE RBRACK RPAREN SEMICOLON VARtest : atomvariables : VARvariables : variables COMMA VARrules : rulerules : rules rulerule : LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACKatom : plusexpes GE NUMBERplusexpes : VARplusexpes : plusexpes PLUS VAR'
+_lr_signature = 'AA ACT AF AND COMMA EA EG GE LBRACE LBRACK LPAREN MINUS NOT NUMBER OR PLUS RBRACE RBRACK RPAREN SEMICOLON VARinput : variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBERvariables : VARvariables : variables COMMA VARrules : rulerules : rules rulerule : LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACKatom : plusexpes GE NUMBERplusexpes : VARplusexpes : plusexpes PLUS VARformula : atomformula : NOT formulaformula : formula AND formulaformula : formula OR formulaformula : EA LPAREN ACT COMMA formula RPARENformula : AA LPAREN ACT COMMA formula RPARENformula : EG LPAREN formula RPARENformula : AF LPAREN formula RPARENformula : LPAREN formula RPARENeglogicformula : formula'
     
-_lr_action_items = {'VAR':([0,6,],[4,8,]),'$end':([1,2,7,],[0,-1,-7,]),'GE':([3,4,8,],[5,-8,-9,]),'PLUS':([3,4,8,],[6,-8,-9,]),'NUMBER':([5,],[7,]),}
+_lr_action_items = {'VAR':([0,5,8,10,15,21,23,30,31,36,37,39,40,52,53,],[3,9,12,13,17,17,17,17,17,17,17,50,3,17,17,]),'$end':([1,41,],[0,-1,]),'SEMICOLON':([2,3,6,7,9,11,13,18,19,20,32,42,43,45,49,54,55,59,60,61,],[4,-2,10,-4,-3,-5,15,29,-19,-10,-11,-12,-13,-18,-7,-16,-17,-6,-14,-15,]),'COMMA':([2,3,9,12,16,44,46,51,],[5,-2,-3,14,28,52,53,5,]),'RPAREN':([3,9,20,32,34,42,43,45,47,48,49,51,54,55,57,58,60,61,],[-2,-3,-10,-11,45,-12,-13,-18,54,55,-7,56,-16,-17,60,61,-14,-15,]),'LBRACK':([4,6,7,11,59,],[8,8,-4,-5,-6,]),'ACT':([14,33,35,],[16,44,46,]),'NOT':([15,21,23,30,31,36,37,52,53,],[21,21,21,21,21,21,21,21,21,]),'EA':([15,21,23,30,31,36,37,52,53,],[22,22,22,22,22,22,22,22,22,]),'AA':([15,21,23,30,31,36,37,52,53,],[24,24,24,24,24,24,24,24,24,]),'EG':([15,21,23,30,31,36,37,52,53,],[25,25,25,25,25,25,25,25,25,]),'AF':([15,21,23,30,31,36,37,52,53,],[26,26,26,26,26,26,26,26,26,]),'LPAREN':([15,21,22,23,24,25,26,28,30,31,36,37,52,53,],[23,23,33,23,35,36,37,40,23,23,23,23,23,23,]),'GE':([17,27,50,],[-8,38,-9,]),'PLUS':([17,27,50,],[-8,39,-9,]),'AND':([19,20,32,34,42,43,45,47,48,49,54,55,57,58,60,61,],[30,-10,30,30,30,30,-18,30,30,-7,-16,-17,30,30,-14,-15,]),'OR':([19,20,32,34,42,43,45,47,48,49,54,55,57,58,60,61,],[31,-10,31,31,31,31,-18,31,31,-7,-16,-17,31,31,-14,-15,]),'NUMBER':([29,38,],[41,49,]),'RBRACK':([56,],[59,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'test':([0,],[1,]),'atom':([0,],[2,]),'plusexpes':([0,],[3,]),}
+_lr_goto_items = {'input':([0,],[1,]),'variables':([0,40,],[2,51,]),'rules':([4,],[6,]),'rule':([4,6,],[7,11,]),'eglogicformula':([15,],[18,]),'formula':([15,21,23,30,31,36,37,52,53,],[19,32,34,42,43,47,48,57,58,]),'atom':([15,21,23,30,31,36,37,52,53,],[20,20,20,20,20,20,20,20,20,]),'plusexpes':([15,21,23,30,31,36,37,52,53,],[27,27,27,27,27,27,27,27,27,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,14 +26,24 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> test","S'",1,None,None,None),
-  ('test -> atom','test',1,'p_test','parser.py',133),
-  ('variables -> VAR','variables',1,'p_variables_var','parser.py',138),
-  ('variables -> variables COMMA VAR','variables',3,'p_variables_combine','parser.py',144),
-  ('rules -> rule','rules',1,'p_rules_rule','parser.py',150),
-  ('rules -> rules rule','rules',2,'p_rules_combine','parser.py',156),
-  ('rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK','rule',9,'p_rule','parser.py',162),
-  ('atom -> plusexpes GE NUMBER','atom',3,'p_atom','parser.py',167),
-  ('plusexpes -> VAR','plusexpes',1,'p_pulsexpes_var','parser.py',172),
-  ('plusexpes -> plusexpes PLUS VAR','plusexpes',3,'p_plusexpes_combine','parser.py',177),
+  ("S' -> input","S'",1,None,None,None),
+  ('input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER','input',9,'p_input','parser.py',220),
+  ('variables -> VAR','variables',1,'p_variables_var','parser.py',228),
+  ('variables -> variables COMMA VAR','variables',3,'p_variables_combine','parser.py',234),
+  ('rules -> rule','rules',1,'p_rules_rule','parser.py',240),
+  ('rules -> rules rule','rules',2,'p_rules_combine','parser.py',246),
+  ('rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK','rule',9,'p_rule','parser.py',252),
+  ('atom -> plusexpes GE NUMBER','atom',3,'p_atom','parser.py',257),
+  ('plusexpes -> VAR','plusexpes',1,'p_pulsexpes_var','parser.py',262),
+  ('plusexpes -> plusexpes PLUS VAR','plusexpes',3,'p_plusexpes_combine','parser.py',267),
+  ('formula -> atom','formula',1,'p_formula_atom','parser.py',273),
+  ('formula -> NOT formula','formula',2,'p_formula_neg','parser.py',278),
+  ('formula -> formula AND formula','formula',3,'p_formula_conj','parser.py',283),
+  ('formula -> formula OR formula','formula',3,'p_formula_disj','parser.py',288),
+  ('formula -> EA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_ea','parser.py',293),
+  ('formula -> AA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_aa','parser.py',298),
+  ('formula -> EG LPAREN formula RPAREN','formula',4,'p_formula_eg','parser.py',303),
+  ('formula -> AF LPAREN formula RPAREN','formula',4,'p_formula_af','parser.py',308),
+  ('formula -> LPAREN formula RPAREN','formula',3,'p_formula_paren','parser.py',312),
+  ('eglogicformula -> formula','eglogicformula',1,'p_eglogicformula','parser.py',316),
 ]
