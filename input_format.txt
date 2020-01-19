@@ -5,6 +5,8 @@ X, Y                  // elements in V
 [Y, b, (X, X)]     // rule 2
 X                     // the initial state
 EG(AF(X + Y >= 2))            // EG logic formula
+EG(E(a, (X + Y >= 2)))            // example of E<a> formula
+EG(A(b, (X + Y >= 2)))            // example of A<b> formula
 100                     // bound k
 
 

@@ -41,7 +41,7 @@ def generate_one_trans(rule, old_name, new_name, process_num):
 
 
 def checking(file, state, k, formula, process_num, rules):
-    random_upper_bound = k * 10000000000000000
+    random_upper_bound = k * 100
     f = open(file, 'a+')
     op_name = formula.get_op_name()
     if op_name == "atom":
