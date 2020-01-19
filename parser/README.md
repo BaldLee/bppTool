@@ -59,13 +59,13 @@ Action names are composed of lowercase letters and digits, and action names must
 
 ## Grammar Analysis
 
-- input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eg_logic_formula SEMICOLON NUMBER
+- input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER
 - variables -> VAR
 - variables -> variables COMMA VAR
 - rules -> rule
 - rules -> rules rule
 - rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK
-- eg_logic_formula -> formula
+- eglogicformula -> formula
 - formula -> atom
 - formula -> NOT LPAREN formula RPAREN
 - formula -> LPAREN formula RPAREN AND LPAREN formula RPAREN
