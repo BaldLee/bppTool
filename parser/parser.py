@@ -138,6 +138,12 @@ class FormulaKind(Enum):
     AF = 7
 
 
+class SimpleExp:
+    def __init__(self, number, var):
+        self.number = number
+        self.var = var
+
+
 class GrammarFormula:
     def __init__(self, kind, init):
         self.kind = kind
@@ -165,6 +171,25 @@ class GrammarFormula:
             self.eg = init
         if(kind == FormulaKind.AF):
             self.af = init
+
+    def get_formula(self):
+        if(self.kind == FormulaKind.ATOM):
+            return self.atom
+        if(self.kind == FormulaKind.NEG):
+            return self.neg
+        if(self.kind == FormulaKind.CONJ):
+            return self.conj
+        if(self.kind == FormulaKind.DISJ):
+            return self.disj
+        if(self.kind == FormulaKind.EA):
+            return self.ea
+        if(self.kind == FormulaKind.AA):
+            return self.aa
+        if(self.kind == FormulaKind.EG):
+            return self.eg
+        if(self.kind == FormulaKind.AF):
+            return self.af
+        return None
 
 
 class AtomFormula:
@@ -211,17 +236,35 @@ class AfFormula:
         self.subformula = subformula
 
 
+class Input:
+    def __init__(self, variables, actions, rules, start, eglogic, limit):
+        self.variables = variables
+        self.actions = actions
+        self.rules = rules
+        self.start = start
+        self.eglogic = eglogic
+        self.limit = limit
+
 # def p_test(p):
 #     'test : formula'
 #     p[0] = p[1]
 
 
 def p_input(p):
-    'input : variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER'
-    print(p[1])
+    'input : variables SEMICOLON actions SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER'
+    # print(p[7].get_formula().subformula.get_formula().left.get_formula().atom.vector[0].number)
+    # print(p[7].eg.subformula.conj.left.atom.atom.vector[0].var)
+    # print(p[7].eg.subformula.conj.left.atom.atom.vector[1].number)
+    # print(p[7].eg.subformula.conj.left.atom.atom.vector[1].var)
     print(p[3])
-    print(p[7])
-    p[0] = "aaa"
+    p[0] = Input(p[1], p[3], p[5], p[7], p[9], p[11])
+
+# def p_input(p):
+#     'input : eglogicformula'
+#     print(p[1])
+#     print(p[1].atom.atom.vector)
+#     print(p[1].atom.atom.required)
+#     p[0] = "aaa"
 
 
 def p_variables_var(p):
@@ -234,6 +277,18 @@ def p_variables_combine(p):
     'variables : variables COMMA VAR'
     p[0] = p[1]
     p[0].append(p[3])
+
+
+def p_actions_act(p):
+    'actions : ACT'
+    p[0] = []
+    p[0].append(p[1])
+
+
+def p_actions_combine(p):
+    'actions : actions COMMA ACT'
+    p[0] = p[1]
+    p[1].append(p[3])
 
 
 def p_rules_rule(p):
@@ -258,13 +313,33 @@ def p_atom(p):
     p[0] = GrammarAtom(p[1], p[3])
 
 
-def p_pulsexpes_var(p):
-    'plusexpes : VAR'
-    p[0] = [p[1]]
+def p_exp_var(p):
+    'exp : VAR'
+    p[0] = SimpleExp(1, p[1])
+
+
+def p_exp_numbervar(p):
+    'exp : NUMBER VAR'
+    p[0] = SimpleExp(p[1], p[2])
+
+# def p_pulsexpes_var(p):
+#     'plusexpes : VAR'
+#     p[0] = []
+#     p[0].append(p[1])
+
+# def p_plusexpes_numbervar(p):
+#     'plusexpes : NUMBER VAR'
+#     p[0] = (p[1], p[2])
+
+
+def p_plusexpes_simple(p):
+    'plusexpes : exp'
+    p[0] = []
+    p[0].append(p[1])
 
 
 def p_plusexpes_combine(p):
-    'plusexpes : plusexpes PLUS VAR'
+    'plusexpes : plusexpes PLUS exp'
     p[0] = p[1]
     p[0].append(p[3])
 
@@ -301,16 +376,18 @@ def p_formula_aa(p):
 
 def p_formula_eg(p):
     'formula : EG LPAREN formula RPAREN'
-    p[0] = GrammarFormula(FormulaKind.EG, EgFormula(p[4]))
+    p[0] = GrammarFormula(FormulaKind.EG, EgFormula(p[3]))
 
 
 def p_formula_af(p):
     'formula : AF LPAREN formula RPAREN'
-    p[0] = GrammarFormula(FormulaKind.AF, AfFormula(p[4]))
+    p[0] = GrammarFormula(FormulaKind.AF, AfFormula(p[3]))
+
 
 def p_formula_paren(p):
     'formula : LPAREN formula RPAREN'
     p[0] = p[2]
+
 
 def p_eglogicformula(p):
     'eglogicformula : formula'
@@ -321,11 +398,15 @@ def p_eglogicformula(p):
 parser = yacc.yacc()
 
 data = '''X,Y;
+a,b;
 [X,a,(Y)]
 [Y,b,(X,Y)];
 X;
-Eg(X + Y >= 2 & Ea(a,(X >= 1)));
+Eg(X + 2Y >= 2 & Ea(a,X >= 1));
 7'''
+
 
 result = parser.parse(data, lexer=lexer)
 print(result)
+
+# Eg(X + Y >= 2 & Ea(a,X >= 1));

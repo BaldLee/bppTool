@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AA ACT AF AND COMMA EA EG GE LBRACE LBRACK LPAREN MINUS NOT NUMBER OR PLUS RBRACE RBRACK RPAREN SEMICOLON VARinput : variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBERvariables : VARvariables : variables COMMA VARrules : rulerules : rules rulerule : LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACKatom : plusexpes GE NUMBERplusexpes : VARplusexpes : plusexpes PLUS VARformula : atomformula : NOT formulaformula : formula AND formulaformula : formula OR formulaformula : EA LPAREN ACT COMMA formula RPARENformula : AA LPAREN ACT COMMA formula RPARENformula : EG LPAREN formula RPARENformula : AF LPAREN formula RPARENformula : LPAREN formula RPARENeglogicformula : formula'
+_lr_signature = 'AA ACT AF AND COMMA EA EG GE LBRACE LBRACK LPAREN MINUS NOT NUMBER OR PLUS RBRACE RBRACK RPAREN SEMICOLON VARinput : variables SEMICOLON actions SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBERvariables : VARvariables : variables COMMA VARactions : ACTactions : actions COMMA ACTrules : rulerules : rules rulerule : LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACKatom : plusexpes GE NUMBERexp : VARexp : NUMBER VARplusexpes : expplusexpes : plusexpes PLUS expformula : atomformula : NOT formulaformula : formula AND formulaformula : formula OR formulaformula : EA LPAREN ACT COMMA formula RPARENformula : AA LPAREN ACT COMMA formula RPARENformula : EG LPAREN formula RPARENformula : AF LPAREN formula RPARENformula : LPAREN formula RPARENeglogicformula : formula'
     
-_lr_action_items = {'VAR':([0,5,8,10,15,21,23,30,31,36,37,39,40,52,53,],[3,9,12,13,17,17,17,17,17,17,17,50,3,17,17,]),'$end':([1,41,],[0,-1,]),'SEMICOLON':([2,3,6,7,9,11,13,18,19,20,32,42,43,45,49,54,55,59,60,61,],[4,-2,10,-4,-3,-5,15,29,-19,-10,-11,-12,-13,-18,-7,-16,-17,-6,-14,-15,]),'COMMA':([2,3,9,12,16,44,46,51,],[5,-2,-3,14,28,52,53,5,]),'RPAREN':([3,9,20,32,34,42,43,45,47,48,49,51,54,55,57,58,60,61,],[-2,-3,-10,-11,45,-12,-13,-18,54,55,-7,56,-16,-17,60,61,-14,-15,]),'LBRACK':([4,6,7,11,59,],[8,8,-4,-5,-6,]),'ACT':([14,33,35,],[16,44,46,]),'NOT':([15,21,23,30,31,36,37,52,53,],[21,21,21,21,21,21,21,21,21,]),'EA':([15,21,23,30,31,36,37,52,53,],[22,22,22,22,22,22,22,22,22,]),'AA':([15,21,23,30,31,36,37,52,53,],[24,24,24,24,24,24,24,24,24,]),'EG':([15,21,23,30,31,36,37,52,53,],[25,25,25,25,25,25,25,25,25,]),'AF':([15,21,23,30,31,36,37,52,53,],[26,26,26,26,26,26,26,26,26,]),'LPAREN':([15,21,22,23,24,25,26,28,30,31,36,37,52,53,],[23,23,33,23,35,36,37,40,23,23,23,23,23,23,]),'GE':([17,27,50,],[-8,38,-9,]),'PLUS':([17,27,50,],[-8,39,-9,]),'AND':([19,20,32,34,42,43,45,47,48,49,54,55,57,58,60,61,],[30,-10,30,30,30,30,-18,30,30,-7,-16,-17,30,30,-14,-15,]),'OR':([19,20,32,34,42,43,45,47,48,49,54,55,57,58,60,61,],[31,-10,31,31,31,31,-18,31,31,-7,-16,-17,31,31,-14,-15,]),'NUMBER':([29,38,],[41,49,]),'RBRACK':([56,],[59,]),}
+_lr_action_items = {'VAR':([0,5,13,15,20,24,27,29,38,39,44,45,47,48,60,61,],[3,8,17,18,22,37,22,22,22,22,22,22,22,3,22,22,]),'$end':([1,49,],[0,-1,]),'SEMICOLON':([2,3,6,7,8,11,12,14,16,18,23,25,26,40,50,51,53,57,62,63,67,68,69,],[4,-2,9,-4,-3,15,-6,-5,-7,20,36,-23,-14,-15,-16,-17,-22,-9,-20,-21,-8,-18,-19,]),'COMMA':([2,3,6,7,8,14,17,21,52,54,59,],[5,-2,10,-4,-3,-5,19,35,60,61,5,]),'RPAREN':([3,8,26,40,42,50,51,53,55,56,57,59,62,63,65,66,68,69,],[-2,-3,-14,-15,53,-16,-17,-22,62,63,-9,64,-20,-21,68,69,-18,-19,]),'ACT':([4,10,19,41,43,],[7,14,21,52,54,]),'LBRACK':([9,11,12,16,67,],[13,13,-6,-7,-8,]),'NOT':([20,27,29,38,39,44,45,60,61,],[27,27,27,27,27,27,27,27,27,]),'EA':([20,27,29,38,39,44,45,60,61,],[28,28,28,28,28,28,28,28,28,]),'AA':([20,27,29,38,39,44,45,60,61,],[30,30,30,30,30,30,30,30,30,]),'EG':([20,27,29,38,39,44,45,60,61,],[31,31,31,31,31,31,31,31,31,]),'AF':([20,27,29,38,39,44,45,60,61,],[32,32,32,32,32,32,32,32,32,]),'LPAREN':([20,27,28,29,30,31,32,35,38,39,44,45,60,61,],[29,29,41,29,43,44,45,48,29,29,29,29,29,29,]),'NUMBER':([20,27,29,36,38,39,44,45,46,47,60,61,],[24,24,24,49,24,24,24,24,57,24,24,24,]),'GE':([22,33,34,37,58,],[-10,46,-12,-11,-13,]),'PLUS':([22,33,34,37,58,],[-10,47,-12,-11,-13,]),'AND':([25,26,40,42,50,51,53,55,56,57,62,63,65,66,68,69,],[38,-14,38,38,38,38,-22,38,38,-9,-20,-21,38,38,-18,-19,]),'OR':([25,26,40,42,50,51,53,55,56,57,62,63,65,66,68,69,],[39,-14,39,39,39,39,-22,39,39,-9,-20,-21,39,39,-18,-19,]),'RBRACK':([64,],[67,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'input':([0,],[1,]),'variables':([0,40,],[2,51,]),'rules':([4,],[6,]),'rule':([4,6,],[7,11,]),'eglogicformula':([15,],[18,]),'formula':([15,21,23,30,31,36,37,52,53,],[19,32,34,42,43,47,48,57,58,]),'atom':([15,21,23,30,31,36,37,52,53,],[20,20,20,20,20,20,20,20,20,]),'plusexpes':([15,21,23,30,31,36,37,52,53,],[27,27,27,27,27,27,27,27,27,]),}
+_lr_goto_items = {'input':([0,],[1,]),'variables':([0,48,],[2,59,]),'actions':([4,],[6,]),'rules':([9,],[11,]),'rule':([9,11,],[12,16,]),'eglogicformula':([20,],[23,]),'formula':([20,27,29,38,39,44,45,60,61,],[25,40,42,50,51,55,56,65,66,]),'atom':([20,27,29,38,39,44,45,60,61,],[26,26,26,26,26,26,26,26,26,]),'plusexpes':([20,27,29,38,39,44,45,60,61,],[33,33,33,33,33,33,33,33,33,]),'exp':([20,27,29,38,39,44,45,47,60,61,],[34,34,34,34,34,34,34,58,34,34,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,23 +27,27 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> input","S'",1,None,None,None),
-  ('input -> variables SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER','input',9,'p_input','parser.py',220),
-  ('variables -> VAR','variables',1,'p_variables_var','parser.py',228),
-  ('variables -> variables COMMA VAR','variables',3,'p_variables_combine','parser.py',234),
-  ('rules -> rule','rules',1,'p_rules_rule','parser.py',240),
-  ('rules -> rules rule','rules',2,'p_rules_combine','parser.py',246),
-  ('rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK','rule',9,'p_rule','parser.py',252),
-  ('atom -> plusexpes GE NUMBER','atom',3,'p_atom','parser.py',257),
-  ('plusexpes -> VAR','plusexpes',1,'p_pulsexpes_var','parser.py',262),
-  ('plusexpes -> plusexpes PLUS VAR','plusexpes',3,'p_plusexpes_combine','parser.py',267),
-  ('formula -> atom','formula',1,'p_formula_atom','parser.py',273),
-  ('formula -> NOT formula','formula',2,'p_formula_neg','parser.py',278),
-  ('formula -> formula AND formula','formula',3,'p_formula_conj','parser.py',283),
-  ('formula -> formula OR formula','formula',3,'p_formula_disj','parser.py',288),
-  ('formula -> EA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_ea','parser.py',293),
-  ('formula -> AA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_aa','parser.py',298),
-  ('formula -> EG LPAREN formula RPAREN','formula',4,'p_formula_eg','parser.py',303),
-  ('formula -> AF LPAREN formula RPAREN','formula',4,'p_formula_af','parser.py',308),
-  ('formula -> LPAREN formula RPAREN','formula',3,'p_formula_paren','parser.py',312),
-  ('eglogicformula -> formula','eglogicformula',1,'p_eglogicformula','parser.py',316),
+  ('input -> variables SEMICOLON actions SEMICOLON rules SEMICOLON VAR SEMICOLON eglogicformula SEMICOLON NUMBER','input',11,'p_input','parser.py',254),
+  ('variables -> VAR','variables',1,'p_variables_var','parser.py',270),
+  ('variables -> variables COMMA VAR','variables',3,'p_variables_combine','parser.py',276),
+  ('actions -> ACT','actions',1,'p_actions_act','parser.py',282),
+  ('actions -> actions COMMA ACT','actions',3,'p_actions_combine','parser.py',288),
+  ('rules -> rule','rules',1,'p_rules_rule','parser.py',294),
+  ('rules -> rules rule','rules',2,'p_rules_combine','parser.py',300),
+  ('rule -> LBRACK VAR COMMA ACT COMMA LPAREN variables RPAREN RBRACK','rule',9,'p_rule','parser.py',306),
+  ('atom -> plusexpes GE NUMBER','atom',3,'p_atom','parser.py',311),
+  ('exp -> VAR','exp',1,'p_exp_var','parser.py',316),
+  ('exp -> NUMBER VAR','exp',2,'p_exp_numbervar','parser.py',321),
+  ('plusexpes -> exp','plusexpes',1,'p_plusexpes_simple','parser.py',335),
+  ('plusexpes -> plusexpes PLUS exp','plusexpes',3,'p_plusexpes_combine','parser.py',341),
+  ('formula -> atom','formula',1,'p_formula_atom','parser.py',347),
+  ('formula -> NOT formula','formula',2,'p_formula_neg','parser.py',352),
+  ('formula -> formula AND formula','formula',3,'p_formula_conj','parser.py',357),
+  ('formula -> formula OR formula','formula',3,'p_formula_disj','parser.py',362),
+  ('formula -> EA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_ea','parser.py',367),
+  ('formula -> AA LPAREN ACT COMMA formula RPAREN','formula',6,'p_formula_aa','parser.py',372),
+  ('formula -> EG LPAREN formula RPAREN','formula',4,'p_formula_eg','parser.py',377),
+  ('formula -> AF LPAREN formula RPAREN','formula',4,'p_formula_af','parser.py',382),
+  ('formula -> LPAREN formula RPAREN','formula',3,'p_formula_paren','parser.py',387),
+  ('eglogicformula -> formula','eglogicformula',1,'p_eglogicformula','parser.py',392),
 ]

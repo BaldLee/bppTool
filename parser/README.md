@@ -77,4 +77,5 @@ Action names are composed of lowercase letters and digits, and action names must
 - formula -> AF LPAREN formula RPAREN
 - atom -> plus_expes GE NUMBER
 - plus_expes -> VAR
+- plus_expes -> NUMBER VAR
 - plus_expes -> plus_expes PLUS VAR
