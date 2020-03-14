@@ -1,5 +1,5 @@
-import ply.lex as lex
-import ply.yacc as yacc
+import parser.ply.lex as lex
+import parser.ply.yacc as yacc
 from definition import *
 from enum import Enum
 
@@ -256,7 +256,7 @@ def p_input(p):
     # print(p[7].eg.subformula.conj.left.atom.atom.vector[0].var)
     # print(p[7].eg.subformula.conj.left.atom.atom.vector[1].number)
     # print(p[7].eg.subformula.conj.left.atom.atom.vector[1].var)
-    print(p[3])
+    # print(p[3])
     p[0] = Input(p[1], p[3], p[5], p[7], p[9], p[11])
 
 # def p_input(p):
@@ -397,16 +397,20 @@ def p_eglogicformula(p):
 # init parser
 parser = yacc.yacc()
 
-data = '''X,Y;
-a,b;
-[X,a,(Y)]
-[Y,b,(X,Y)];
-X;
-Eg(X + 2Y >= 2 & Ea(a,X >= 1));
-7'''
+# data = '''X,Y;
+# a,b;
+# [X,a,(Y)]
+# [Y,b,(X,Y)];
+# X;
+# Eg(Ea(a, X + Y >= 2));
+# 7'''
 
+filein = open("parser/input.txt")
+data = filein.read()
+# print(data)
 
 result = parser.parse(data, lexer=lexer)
-print(result)
+# print(result)
 
 # Eg(X + Y >= 2 & Ea(a,X >= 1));
+# Eg(Ea(a, X + Y >= 2));

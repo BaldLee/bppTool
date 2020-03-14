@@ -19,8 +19,15 @@ class Atom:
         self.required = required
     def get_op_name(self):
         return "atom"
-    # def get_print_result(self):
-    #     return "X_%d >= %d" %(self.index, self.required)
+    def get_print_result(self):
+        # left_exp = ""
+        # for i in range(len(self.vector)):
+        #     if self.vector[i] != 0:
+        #         left_exp = left_exp + ("X_%d * %d" %(i, self.vector[i]))
+        left_exp_list = list(filter(lambda p: p[1] != 0, list(enumerate(self.vector))))
+        left_exp_list = list(map(lambda p: "X_%d * %d" %(p[0], p[1]), left_exp_list))
+        left_exp = " + ".join(left_exp_list)
+        return "%s >= %d" %(left_exp, self.required)
     def show(self):
         print(self.get_print_result())
 
@@ -54,7 +61,7 @@ class Disj:
     def show(self):
         print(self.get_print_result())
 
-class Ea:
+class EX:
     def __init__(self, action, subFormula):
         self.action = action
         self.subFormula = subFormula
@@ -65,7 +72,7 @@ class Ea:
     def show(self):
         print(self.get_print_result())
 
-class Aa:
+class AX:
     def __init__(self, action, subFormula):
         self.action = action
         self.subFormula = subFormula
